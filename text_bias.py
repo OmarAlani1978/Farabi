@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import os
+API_KEY = os.getenv("NEWSAPI_KEY")
 import pandas as pd
 import matplotlib.pyplot as plt
 import nltk
