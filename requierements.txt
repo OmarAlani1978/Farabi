@@ -1,0 +1,8 @@
+streamlit
+requests
+pandas
+nltk
+textblob
+matplotlib
+fastapi
+uvicorn
