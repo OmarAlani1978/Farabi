@@ -101,9 +101,20 @@ num_articles = st.slider("Number of articles to analyze:", 1, 10, 5)
 
 if st.button("Analyze Bias"):
     articles = fetch_articles(topic, num_articles)
-    result_df = analyze_bias_over_time(articles)
+
+    # Display which articles are being analyzed
+    st.subheader("📌 Articles Being Analyzed:")
+    for article in articles:
+        st.write(f"**{article['title']}** - {article['source']} ([Read more]({article['url']}))")
+    
+    # ✅ Fix: Convert list of dictionaries to list of tuples (date, content)
+    article_data = [(art["date"], art["content"]) for art in articles]
+
+    # Analyze and display results
+    result_df = analyze_bias_over_time(article_data)
     st.write(result_df)
     plot_bias_trends(result_df)
+
 
 # FastAPI Endpoint for API Users
 @api_app.get("/analyze/")
