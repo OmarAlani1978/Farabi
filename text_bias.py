@@ -48,12 +48,28 @@ def analyze_bias(article_text):
         "Final Bias Score": bias_score
     }
 
-# Function to fetch news articles
 def fetch_articles(topic, num_articles=5):
+    """
+    Fetches articles related to a given topic using NewsAPI.
+    Displays article titles and sources before analyzing.
+    """
     url = f"https://newsapi.org/v2/everything?q={topic}&apiKey={API_KEY}"
     response = requests.get(url)
     articles = response.json().get("articles", [])
-    return [(article["publishedAt"], article["content"]) for article in articles[:num_articles] if article["content"]]
+
+    results = []
+    for article in articles[:num_articles]:
+        if article["content"]:
+            results.append({
+                "date": article["publishedAt"],
+                "title": article["title"],
+                "source": article["source"]["name"],
+                "url": article["url"],
+                "content": article["content"]
+            })
+    
+    return results
+
 
 # Function to analyze multiple articles over time
 def analyze_bias_over_time(articles):
